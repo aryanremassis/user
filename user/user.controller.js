@@ -11,51 +11,16 @@ exports.addUser = async (req, res) => {
   const rand = Math.random();
   const shashum = crypto.createHash("sha1");
   const salt = shashum.update(rand.toString()).digest("hex").substr(0, 9);
-  console.log(salt);
   const password = await bcrypt.hash(salt, 10);
-  let userId;
   const doctorId = user_id;
-  Model.insertUser({ date }, (err, data) => {
-    userId = data[1][0]["last_insert_id()"];
-    Model.insertUserDetails({ userId, name, date }, (err, data) => {
-      if (!err) {
-        Model.insertRoleUser({ userId }, (err, data) => {
-          if (!err) {
-            Model.insertUserMap({ userId, doctorId, date }, (err, data) => {
-              if (!err) {
-                Model.insertUserLogin(
-                  { userId, email, password, mobile, date, salt },
-                  (err, data) => {
-                    if (!err) {
-                      Model.insertPatientAvailStatus(
-                        { userId },
-                        (err, data) => {
-                          if (!err) {
-                            res.json({
-                              userId,
-                              userTypeId: 6,
-                              email,
-                              userType: "patient",
-                              roleId: 3,
-                              firstname: name,
-                              middlename: "",
-                              lastname: "",
-                              mobileno: mobile,
-                              providerName: "",
-                              firstLogin: "1",
-                              loginType: "patient",
-                            });
-                          }
-                        }
-                      );
-                    }
-                  }
-                );
-              }
-            });
-          }
-        });
+  Model.addUser(
+    { doctorId, date, email, name, password, salt, mobile },
+    (err, data) => {
+      if (err) {
+        res.status(500).json({ error: "Server error" });
       }
-    });
-  });
+      console.log(data);
+      res.json({ message: "success" });
+    }
+  );
 };
