@@ -29,6 +29,20 @@ let user = {
       callback
     );
   },
+  getByEmail: function (params, callback) {
+    executeQuery(
+      "select * from user_login where email=?",
+      [params.email],
+      callback
+    );
+  },
+  getByMobile: function (params, callback) {
+    executeQuery(
+      "select * from user_login where mobile=?",
+      [params.mobile],
+      callback
+    );
+  },
 };
 
 module.exports = user;

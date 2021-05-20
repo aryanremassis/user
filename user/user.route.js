@@ -4,11 +4,11 @@ const router = Router();
 const Controller = require("./user.controller");
 
 router.post(
-  "/addPatient",
+  "/add",
   validate.addPatientRules(),
   validate.validate,
-  (req, res) => res.send("success")
+  validate.checkUnique,
+  Controller.addUser
 );
-router.post("/add", Controller.addUser);
 
 module.exports = router;

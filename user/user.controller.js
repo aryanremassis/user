@@ -7,20 +7,20 @@ const getYmdhms = () =>
 
 exports.addUser = async (req, res) => {
   const date = getYmdhms();
-  const { name, email, mobile, user_id } = req.query;
+  const { name, email, mobile, doctor_id } = req.query;
   const rand = Math.random();
   const shashum = crypto.createHash("sha1");
   const salt = shashum.update(rand.toString()).digest("hex").substr(0, 9);
   const password = await bcrypt.hash(salt, 10);
-  const doctorId = user_id;
+  const doctorId = doctor_id;
   Model.addUser(
     { doctorId, date, email, name, password, salt, mobile },
     (err, data) => {
       if (err) {
-        res.status(500).json({ error: "Server error" });
+        return res.status(500).json({ error: "Server error" });
       }
       console.log(data);
-      res.json({ message: "success" });
+      return res.json({ message: "success" });
     }
   );
 };
