@@ -1,12 +1,10 @@
 const Model = require("./user.model");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-
-const getYmdhms = () =>
-  new Date().toISOString().replace(/T/, " ").replace(/\..+/, "");
+const moment = require("moment");
 
 exports.addUser = async (req, res) => {
-  const date = getYmdhms();
+  const date = moment().format("YYYY-MM-DD HH:mm:ss");
   const { name, email, mobile, doctor_id } = req.query;
   const rand = Math.random();
   const shashum = crypto.createHash("sha1");
@@ -18,9 +16,9 @@ exports.addUser = async (req, res) => {
     (err, data) => {
       if (err) {
         return res.status(500).json({ error: "Server error" });
+      } else {
+        return res.json({ message: "success" });
       }
-      console.log(data);
-      return res.json({ message: "success" });
     }
   );
 };
