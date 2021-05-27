@@ -11,4 +11,6 @@ router.post(
   Controller.addUser
 );
 
+router.get("/get/:doctor_id", Controller.getUsers);
+
 module.exports = router;

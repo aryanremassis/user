@@ -16,7 +16,7 @@ function executeQuery(query, params, callback) {
 let user = {
   addUser: function (params, callback) {
     executeQuery(
-      "call AddUser(?, ?, ?, ?, ?, ?, ?)",
+      "call AddUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         params.doctorId,
         params.date,
@@ -25,7 +25,17 @@ let user = {
         params.password,
         params.salt,
         params.mobile,
+        params.gender,
+        params.blood_group,
+        params.dob,
       ],
+      callback
+    );
+  },
+  getUsers: function (params, callback) {
+    executeQuery(
+      "select d.user_id, d.firstname, d.gender_id, d.dob, d.blood_group, l.email, l.mobile, l.date_created from user_map as m inner join user_details as d on m.user_child_id = d.user_id inner join user_login as l on m.user_child_id = l.user_id where m.user_parent_id = ?",
+      [params.doctor_id],
       callback
     );
   },
