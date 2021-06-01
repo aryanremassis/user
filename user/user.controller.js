@@ -48,11 +48,39 @@ exports.getUsers = async (req, res) => {
     if (err) {
       return res.status(500).json({ error: "Server error" });
     } else {
+      console.log("DATA", data);
       data = data.map((el) => ({
         ...el,
         mobile: "*******" + el.mobile.slice(7, 10),
+        email: encryptEmail(el.email),
       }));
       return res.json(data);
     }
   });
+};
+
+const encryptEmail = (email) => {
+  let emailData = email.split("@");
+  let username = "";
+  let provider = emailData[1];
+
+  if (emailData[0].length >= 8) {
+    const start = emailData[0].slice(0, 2);
+    const end = emailData[0].slice(
+      emailData[0].length - 3,
+      emailData[0].length
+    );
+    username += start;
+    for (let i = 2; i < emailData[0].length - 3; i++) {
+      username += "*";
+    }
+    username += end;
+  } else {
+    username = emailData[0].slice(0, 2);
+    for (let i = 2; i < emailData[0].length; i++) {
+      username += "*";
+    }
+  }
+  username += "@" + provider;
+  return username;
 };
