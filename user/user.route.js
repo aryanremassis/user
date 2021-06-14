@@ -13,4 +13,6 @@ router.post(
 
 router.get("/get/:doctor_id", Controller.getUsers);
 
+router.get("/getDoctors/:doctor_ids", Controller.getDoctors);
+
 module.exports = router;

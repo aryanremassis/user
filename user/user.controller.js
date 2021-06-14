@@ -59,6 +59,28 @@ exports.getUsers = async (req, res) => {
   });
 };
 
+exports.getDoctors = (req, res) => {
+  let idList = JSON.parse(req.params.doctor_ids);
+  idList = idList.map((el) => parseInt(el));
+  if (idList.length === 0) {
+    Model.getAllDoctors({}, (err, data) => {
+      if (err) {
+        return res.status(500).json({ error: "Server error" });
+      } else {
+        return res.json({ data });
+      }
+    });
+  } else {
+    Model.getDoctors({ idList }, (err, data) => {
+      if (err) {
+        return res.status(500).json({ error: "Server error" });
+      } else {
+        return res.json({ data });
+      }
+    });
+  }
+};
+
 const encryptEmail = (email) => {
   let emailData = email.split("@");
   let username = "";
