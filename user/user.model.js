@@ -57,14 +57,14 @@ let user = {
   },
   getDoctors: function (params, callback) {
     executeQuery(
-      "select d.experience, d.firstname from user as u inner join user_details as d on u.user_id = d.user_id where u.user_id in (?) and u.user_type_id = 7",
+      "select d.experience, d.firstname, d.user_id from user as u inner join user_details as d on u.user_id = d.user_id where u.user_id in (?) and u.user_type_id = 7",
       [params.idList],
       callback
     );
   },
   getAllDoctors: function (params, callback) {
     executeQuery(
-      "select d.experience, d.firstname from user as u inner join user_details as d on u.user_id = d.user_id where u.user_type_id = 7",
+      "select d.experience, d.firstname, d.user_id from user as u inner join user_details as d on u.user_id = d.user_id where u.user_type_id = 7",
       callback
     );
   },
