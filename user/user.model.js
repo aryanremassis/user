@@ -68,6 +68,13 @@ let user = {
       callback
     );
   },
+  getUserById: function (params, callback) {
+    executeQuery(
+      "select user_id, firstname, gender_id, dob from user_details where user_id=?",
+      [params.user_id],
+      callback
+    );
+  },
 };
 
 module.exports = user;

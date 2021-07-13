@@ -59,6 +59,17 @@ exports.getUsers = async (req, res) => {
   });
 };
 
+exports.getUserById = async (req, res) => {
+  const { user_id } = req.params;
+  Model.getUserById({ user_id }, (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: "Server error" });
+    } else {
+      return res.json({ data });
+    }
+  });
+};
+
 exports.getDoctors = (req, res) => {
   let idList = JSON.parse(req.params.doctor_ids);
   idList = idList.map((el) => parseInt(el));
