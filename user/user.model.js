@@ -68,10 +68,10 @@ let user = {
       callback
     );
   },
-  getUserById: function (params, callback) {
+  getUsersByIds: function (params, callback) {
     executeQuery(
-      "select user_id, firstname, gender_id, dob from user_details where user_id=?",
-      [params.user_id],
+      "select user_id, firstname, gender_id, dob from user_details where user_id in (?)",
+      [params.user_ids],
       callback
     );
   },

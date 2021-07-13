@@ -59,9 +59,11 @@ exports.getUsers = async (req, res) => {
   });
 };
 
-exports.getUserById = async (req, res) => {
-  const { user_id } = req.params;
-  Model.getUserById({ user_id }, (err, data) => {
+exports.getUsersByIds = async (req, res) => {
+  let user_ids = JSON.parse(req.params.user_ids);
+  user_ids = user_ids.map((el) => parseInt(el));
+  console.log(user_ids);
+  Model.getUsersByIds({ user_ids }, (err, data) => {
     if (err) {
       return res.status(500).json({ error: "Server error" });
     } else {

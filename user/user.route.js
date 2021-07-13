@@ -15,6 +15,6 @@ router.get("/get/:doctor_id", Controller.getUsers);
 
 router.get("/getDoctors/:doctor_ids", Controller.getDoctors);
 
-router.get("/getUserById/:user_id", Controller.getUserById);
+router.get("/getUsersByIds/:user_ids", Controller.getUsersByIds);
 
 module.exports = router;
